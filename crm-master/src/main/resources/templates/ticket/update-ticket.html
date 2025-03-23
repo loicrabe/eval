@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<!-- johanne -->
 <div th:insert="~{/general/head.html}"></div>
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -79,6 +79,13 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="text-danger font-weight-bold" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
+                                </div>
+                                <label class="m-t-20" for="amount">Amount:</label>
+                                <div class="input-group">
+                                    <input type="text" id="amount" th:field="*{amount}" class="form-control">
+                                </div>
+                                <div class="input-group">
+                                    <span class="text-danger font-weight-bold" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" autocomplete="off"></span>
                                 </div>
 
                                 <label class="m-t-20" for="description">Description:</label>
