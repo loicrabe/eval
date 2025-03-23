@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<!-- johanne -->
 <div th:insert="~{/general/head.html}"></div>
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -83,6 +83,7 @@
                                         <th>Lead</th>
                                         <th>phone</th>
                                         <th>Status</th>
+                                        <th>Amount</th>
                                         <th>Customer</th>
                                         <th>Assigned Employee</th>
                                         <th>Show</th>
@@ -96,6 +97,7 @@
                                         <td th:text="${lead.name}"></td>
                                         <td th:text="${lead.phone}"></td>
                                         <td th:text="${lead.status}"></td>
+                                        <td th:text="${lead.amount}"></td>
                                         <td th:text="${lead.customer.name}"></td>
                                         <td th:text="${lead.employee.username}"></td>
                                         <td><a th:href="${home + 'employee/lead/show/' + lead.leadId}"><i class="fas fa-eye"></i></a></td>

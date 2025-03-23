@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  crm-database:
+    image: mysql:8.0.33
+    container_name: crm-database
+    environment:
+      MYSQL_ROOT_PASSWORD: password  # Define a fixed password for MySQL
+      MYSQL_DATABASE: crm            # The database to create
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - crm-network
+    ports:
+      - "3306:3306"
+
+networks:
+  crm-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local

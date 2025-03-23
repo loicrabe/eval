@@ -1,11 +1,13 @@
 package site.easy.to.build.crm.entity;
-
+//johanne
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.mapping.ToOne;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "trigger_ticket")
@@ -47,11 +49,16 @@ public class Ticket {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    
+    @Column(name = "amount", nullable = false, precision = 10, scale = 2)
+    @NotNull(message = "Amount is required")
+    private BigDecimal amount;
 
     public Ticket() {
     }
 
-    public Ticket(String subject, String description, String status, String priority, User manager, User employee, Customer customer, LocalDateTime createdAt) {
+    public Ticket(String subject, String description, String status, String priority, User manager, User employee, Customer customer, LocalDateTime createdAt
+    ,BigDecimal amount) {
         this.subject = subject;
         this.description = description;
         this.status = status;
@@ -60,6 +67,7 @@ public class Ticket {
         this.employee = employee;
         this.customer = customer;
         this.createdAt = createdAt;
+        this.amount=amount;
     }
 
     public int getTicketId() {
@@ -132,5 +140,13 @@ public class Ticket {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }
