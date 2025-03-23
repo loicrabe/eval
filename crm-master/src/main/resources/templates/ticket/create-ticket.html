@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<!-- johanne -->
 <div th:insert="~{/general/head.html}"></div>
 
 <!-- Editable CSS -->
@@ -70,11 +70,11 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Create New Ticket</h4>
+                            
                             <form th:object="${ticket}" th:action="@{/employee/ticket/create-ticket}" method="post">
-
                                 <label class="m-t-20" for="subject">Subject:</label>
                                 <div class="input-group">
-                                    <input type="text" id="subject" th:field="*{subject}" class="form-control">
+                                    <input type="text" id="subject" th:field="*{subject}" class="form-control" required>
                                 </div>
                                 <div class="input-group">
                                     <span class="text-danger font-weight-bold" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></span>
@@ -86,6 +86,13 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="text-danger font-weight-bold" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" autocomplete="off"></span>
+                                </div>
+                                <label class="m-t-20" for="amount">Amount:</label>
+                                <div class="input-group">
+                                    <input type="text" id="amount" th:field="*{amount}" class="form-control" >
+                                </div>
+                                <div class="input-group">
+                                    <span class="text-danger font-weight-bold" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" autocomplete="off"></span>
                                 </div>
 
                                 <label class="m-t-20" for="status">status:</label>
