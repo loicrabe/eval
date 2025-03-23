@@ -14,6 +14,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     public List<Ticket> findByManagerId(int id);
 
+    
+
     public List<Ticket> findByEmployeeId(int id);
 
     List<Ticket> findByCustomerCustomerId(Integer customerId);

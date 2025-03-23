@@ -71,7 +71,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Create New Ticket</h4>
                             
-                            <form th:object="${ticket}" th:action="@{/employee/ticket/create-ticket}" method="post">
+                            <form th:object="${ticket}" th:action="@{/employee/ticket/create-ticket}" id="email-form"  method="post">
                                 <label class="m-t-20" for="subject">Subject:</label>
                                 <div class="input-group">
                                     <input type="text" id="subject" th:field="*{subject}" class="form-control" required>
@@ -142,13 +142,66 @@
                                         <option th:each="customer : ${customers}" th:text="${customer.name}" th:value="${customer.customerId}"></option>
                                     </select>
                                 </div>
-
-                                <button type="submit" class="btn btn-primary m-t-20">Create ticket</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Separate button outside the form to trigger the check and submission -->
+            <button type="button" id="checkAndSubmitBtn" class="btn btn-primary m-t-20">Check and Submit</button>
+
+        <script>
+            // Get form and the separate button elements
+            const form = document.getElementById('email-form');
+            const checkAndSubmitBtn = document.getElementById('checkAndSubmitBtn');
+
+            // Add event listener to the button
+            checkAndSubmitBtn.addEventListener('click', function(event) {
+                // Get values from the form fields
+                const amount = document.getElementById('amount').value;  // Amount entered by the user
+                const customerId = document.getElementById('customerId').value;  // Customer ID from the form
+
+                // Check if amount and customerId are not null or empty
+                if (!amount || !customerId) {
+                    alert('Amount and Customer ID must not be empty.');
+                    return;  // Stop further execution if values are missing
+                }
+
+                // Call backend to fetch the customer's budget
+                fetch(`/employee/budget/getRestBudgetByCustomer/${customerId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const totalRest = data.totalRest;  // Budget value from the backend
+
+                        // Compare the available budget with the entered amount
+                        if (totalRest >= amount) {
+                            // Proceed with form submission if the budget is sufficient
+                            form.submit();  // Manually submit the form
+                            return;  // Stop the rest of the code from running
+                        } else {
+                            // Show the alert with the difference
+                            const difference = amount - totalRest;
+                            const message = `Warning! Your remaining budget is not sufficient. You are short by ${difference}.\nDo you want to proceed?`;
+                            console.log(`Difference in budget: ${difference}`);
+
+                            // Show confirmation dialog
+                            const userConfirmed = confirm(message);
+                            if (userConfirmed) {
+                                console.log(`confirmer`);
+                                // If confirmed, allow the form to submit manually
+                                form.submit();  // Manually submit the form
+                            } else {
+                                // If canceled, log and prevent submission
+                                console.log(`annuler`);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching customer budget:', error);
+                        alert('There was an error retrieving the budget.');
+                    });
+            });
+        </script>
             <!-- ============================================================== -->
             <!-- End Page Content -->
             <!-- ============================================================== -->

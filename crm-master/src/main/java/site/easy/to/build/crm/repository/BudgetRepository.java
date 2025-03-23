@@ -11,7 +11,10 @@ import java.util.List;
 public interface BudgetRepository extends JpaRepository<Budget, Integer> {
     // Method to find all status budgets
     List<Budget> findAll();
-    
+
+    // Method to find all budgets by customer ID
+    List<Budget> findByCustomer_CustomerId(Integer customerId);
+
     // Method to save a status budget
     Budget save(Budget budget);
     
