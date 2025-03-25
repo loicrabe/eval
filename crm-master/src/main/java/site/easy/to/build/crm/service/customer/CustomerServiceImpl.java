@@ -7,6 +7,7 @@ import site.easy.to.build.crm.repository.CustomerRepository;
 import site.easy.to.build.crm.entity.Customer;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -56,5 +57,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public long countByUserId(int userId) {
         return customerRepository.countByUserId(userId);
+    }
+
+    @Override
+    public String getClientNameById(int customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        return customer.map(Customer::getName).orElse(null);
     }
 }

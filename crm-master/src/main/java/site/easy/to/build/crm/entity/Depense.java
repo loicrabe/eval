@@ -28,7 +28,7 @@ public class Depense {
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "typeDepenseTransaction", nullable = false)
+    @JoinColumn(name = "type_depense_transaction", nullable = false)
     @JsonIgnoreProperties("depenses")
     private Transaction transactionType;
 

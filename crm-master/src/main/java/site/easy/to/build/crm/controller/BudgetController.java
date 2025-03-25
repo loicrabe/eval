@@ -102,6 +102,13 @@ public class BudgetController {
         return "budget/all-budgets"; // vue
     }
 
+    @GetMapping("/api/budgets")
+    @ResponseBody
+    public ResponseEntity<List<Budget>> getAllBudgetsApi() {
+        List<Budget> budgets = budgetService.getAllBudgets();
+        return ResponseEntity.ok(budgets);
+    }
+
     @GetMapping("/create-budget")
     public String showTicketCreationForm(Model model, Authentication authentication) {
         int userId = authenticationUtils.getLoggedInUserId(authentication);

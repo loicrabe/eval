@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import site.easy.to.build.crm.util.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -63,7 +66,8 @@ public class TicketController {
             return "error/account-inactive";
         }
 
-        Ticket ticket = ticketService.findByTicketId(id);
+        Optional<Ticket> optionalTicket = ticketService.findByTicketId(id);
+        Ticket ticket = optionalTicket.orElse(null);
         if(ticket == null) {
             return "error/not-found";
         }
@@ -182,7 +186,8 @@ public class TicketController {
             return "error/account-inactive";
         }
 
-        Ticket ticket = ticketService.findByTicketId(id);
+        Optional<Ticket> optionalTicket = ticketService.findByTicketId(id);
+        Ticket ticket = optionalTicket.orElse(null);
         if(ticket == null) {
             return "error/not-found";
         }
@@ -226,7 +231,8 @@ public class TicketController {
             return "error/account-inactive";
         }
 
-        Ticket previousTicket = ticketService.findByTicketId(ticket.getTicketId());
+        Optional<Ticket> optionalTicket = ticketService.findByTicketId(ticket.getTicketId());
+        Ticket previousTicket = optionalTicket.orElse(null);
         if(previousTicket == null) {
             return "error/not-found";
         }
@@ -301,22 +307,32 @@ public class TicketController {
     }
 
     @PostMapping("/delete-ticket/{id}")
-    public String deleteTicket(@PathVariable("id") int id, Authentication authentication){
-        int userId = authenticationUtils.getLoggedInUserId(authentication);
-        User loggedInUser = userService.findById(userId);
-        if(loggedInUser.isInactiveUser()) {
-            return "error/account-inactive";
+    public ResponseEntity<Void> deleteTicket(@PathVariable("id") int id) {
+        try {
+            ticketService.deleteTicket(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // Gérer l'erreur ici, par exemple, en retournant un code d'erreur approprié
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
 
-        Ticket ticket = ticketService.findByTicketId(id);
-
-        User employee = ticket.getEmployee();
-        if(!AuthorizationUtil.checkIfUserAuthorized(employee,loggedInUser)) {
-            return "error/access-denied";
+    @GetMapping("/total-tickets")
+    @ResponseBody
+    public ResponseEntity<BigDecimal> getTotalTickets() {
+        try {
+            BigDecimal totalAmount = ticketService.getTotalTicketAmount();
+            return ResponseEntity.ok(totalAmount);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
 
-        ticketService.delete(ticket);
-        return "redirect:/employee/ticket/assigned-tickets";
+    @PostMapping("/update-ticket-amount/{id}")
+    public ResponseEntity<Void> updateTicketAmount(@PathVariable("id") int id, @RequestBody Map<String, Object> request) {
+        BigDecimal newAmount = new BigDecimal(request.get("amount").toString());
+        ticketService.updateTicketAmount(id, newAmount);
+        return ResponseEntity.ok().build();
     }
 
     private void processEmailSettingsChanges(Map<String, Pair<String, String>> changes, int userId, OAuthUser oAuthUser,

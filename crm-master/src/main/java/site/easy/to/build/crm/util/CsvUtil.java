@@ -43,7 +43,7 @@ public class CsvUtil {
                         }
                     }
                 }
-                records.add(instance);
+                records.add(instance); 
             }
 
         } catch (Exception e) {

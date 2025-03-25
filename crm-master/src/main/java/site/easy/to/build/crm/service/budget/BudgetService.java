@@ -8,7 +8,9 @@ import site.easy.to.build.crm.repository.BudgetRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.HashMap;
 
 @Service
 public class BudgetService {
@@ -66,6 +68,28 @@ public class BudgetService {
 
     // Method to delete a budget by its ID
     public void deleteBudget(int id) {
-        budgetRepository.deleteById(id);
+        budgetRepository.deleteById(id);    
+    }
+
+    // Method to get the total amount of all budgets
+    public BigDecimal getTotalBudgetAmount() {
+        List<Budget> budgets = budgetRepository.findAll();
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for (Budget budget : budgets) {
+            totalAmount = totalAmount.add(budget.getAmount()); // Additionner chaque montant
+        }
+        return totalAmount;
+    }
+
+    public Map<Integer, BigDecimal> getBudgetsByCustomer() {
+        List<Budget> budgets = budgetRepository.findAll();
+        Map<Integer, BigDecimal> budgetsByCustomer = new HashMap<>();
+
+        for (Budget budget : budgets) {
+            int customerId = budget.getCustomer().getCustomerId(); // Assurez-vous que vous avez accès à l'ID du client
+            budgetsByCustomer.put(customerId, budgetsByCustomer.getOrDefault(customerId, BigDecimal.ZERO).add(budget.getAmount()));
+        }
+
+        return budgetsByCustomer;
     }
 }

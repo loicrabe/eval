@@ -9,14 +9,14 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTransaction", updatable = false, nullable = false)
+    @Column(name = "id_transaction", updatable = false, nullable = false)
     private Integer idTransaction;
 
-    @Column(name = "nameTransaction", nullable = false)
+    @Column(name = "name_transaction", nullable = false)
     @NotBlank(message = "Transaction name is required")
     private String nameTransaction;
 
-    @Column(name = "columnName", nullable = false)
+    @Column(name = "column_name", nullable = false)
     @NotBlank(message = "Column name is required")
     private String columnName; // Represents lead_id or ticket_id
 

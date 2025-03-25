@@ -14,5 +14,4 @@ public interface DepenseRepository extends JpaRepository<Depense, Integer> {
     void deleteById(Integer id);
     Depense save(Depense depense);
     List<Depense> findByCustomer_CustomerId(Integer customerId);
-
 }

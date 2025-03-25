@@ -1,5 +1,6 @@
 package site.easy.to.build.crm.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -126,13 +128,9 @@ public class CustomerProfileController {
     }
 
     @GetMapping("/ticket/{id}")
-    public String showTicketDetails(@PathVariable("id") int id, Model model) {
-        Ticket ticket = ticketService.findByTicketId(id);
-        if (ticket == null) {
-            return "error/not-found";
-        }
-        model.addAttribute("ticket",ticket);
-        return "customer-info/ticket-detail";
+    public ResponseEntity<Ticket> getTicketById(@PathVariable int id) {
+        Optional<Ticket> optionalTicket = ticketService.findByTicketId(id);
+        return optionalTicket.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/lead/{id}")

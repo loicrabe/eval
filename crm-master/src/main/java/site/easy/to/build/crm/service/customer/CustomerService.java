@@ -23,4 +23,6 @@ public interface CustomerService {
 
     long countByUserId(int userId);
 
+    public String getClientNameById(int customerId);
+
 }

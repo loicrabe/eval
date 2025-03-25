@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import site.easy.to.build.crm.entity.Customer;
 
-
 import java.util.List;
 
 @Repository

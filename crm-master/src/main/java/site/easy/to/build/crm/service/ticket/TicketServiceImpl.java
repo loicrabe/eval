@@ -7,7 +7,11 @@ import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.repository.TicketRepository;
 import site.easy.to.build.crm.entity.Ticket;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.HashMap;
 
 @Service
 public class TicketServiceImpl implements TicketService{
@@ -19,8 +23,8 @@ public class TicketServiceImpl implements TicketService{
     }
 
     @Override
-    public Ticket findByTicketId(int id) {
-        return ticketRepository.findByTicketId(id);
+    public Optional<Ticket> findByTicketId(int id) {
+        return Optional.ofNullable(ticketRepository.findByTicketId(id));
     }
 
     @Override
@@ -89,5 +93,51 @@ public class TicketServiceImpl implements TicketService{
     @Override
     public void deleteAllByCustomer(Customer customer) {
         ticketRepository.deleteAllByCustomer(customer);
+    }
+
+    @Override
+    public BigDecimal getTotalTicketAmount() {
+        List<Ticket> tickets = ticketRepository.findAll();
+        BigDecimal totalTicket = BigDecimal.ZERO;
+        for (Ticket ticket : tickets) {
+            totalTicket = totalTicket.add(ticket.getAmount()); // Assurez-vous que getMontant() existe
+        }
+        return totalTicket;
+    }
+
+    @Override
+    public Map<Integer, Long> countTicketsByCustomer() {
+        List<Ticket> tickets = ticketRepository.findAll();
+        Map<Integer, Long> ticketsCountByCustomer = new HashMap<>();
+
+        for (Ticket ticket : tickets) {
+            int customerId = ticket.getCustomer().getCustomerId(); // Assurez-vous que vous avez accès à l'ID du client
+            ticketsCountByCustomer.put(customerId, ticketsCountByCustomer.getOrDefault(customerId, 0L) + 1);
+        }
+
+        return ticketsCountByCustomer;
+    }
+
+    @Override
+    public Map<Integer, BigDecimal> getTotalTicketAmountByCustomer() {
+        // Implémentez la logique pour obtenir le montant total des tickets par client
+        return null; // Placeholder return, actual implementation needed
+    }
+
+    @Override
+    public void updateTicketAmount(int ticketId, BigDecimal newAmount) {
+        Ticket ticket = ticketRepository.findByTicketId(ticketId);
+        if (ticket != null) {
+            ticket.setAmount(newAmount);
+            ticketRepository.save(ticket);
+        }
+    }
+
+    @Override
+    public void deleteTicket(int ticketId) {
+        Ticket ticket = ticketRepository.findByTicketId(ticketId);
+        if (ticket != null) {
+            ticketRepository.delete(ticket);
+        }
     }
 }

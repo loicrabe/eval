@@ -37,6 +37,7 @@ import site.easy.to.build.crm.util.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -450,22 +451,10 @@ public class LeadController {
         return "redirect:/employee/lead/assigned-leads";
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteLead(@PathVariable("id") int id, Authentication authentication) {
-        Lead lead = leadService.findByLeadId(id);
-
-        User employee = lead.getEmployee();
-        int userId = authenticationUtils.getLoggedInUserId(authentication);
-        User loggedInUser = userService.findById(userId);
-        if(loggedInUser.isInactiveUser()) {
-            return "error/account-inactive";
-        }
-        if(!AuthorizationUtil.checkIfUserAuthorized(employee,loggedInUser)) {
-            return "error/access-denied";
-        }
-
-        leadService.delete(lead);
-        return "redirect:/employee/lead/created-leads";
+    @PostMapping("/delete-lead/{id}")
+    public ResponseEntity<Void> deleteLead(@PathVariable("id") int id) {
+        leadService.deleteLead(id);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/save-attachment/ajax")
@@ -490,6 +479,13 @@ public class LeadController {
         response.put("folderId", folderId);
         response.put("folderName", folderName);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/update-lead-amount/{id}")
+    public ResponseEntity<Void> updateLeadAmount(@PathVariable("id") int id, @RequestBody Map<String, Object> request) {
+        BigDecimal newAmount = new BigDecimal(request.get("amount").toString());
+        leadService.updateLeadAmount(id, newAmount);
+        return ResponseEntity.ok().build();
     }
 
     private StringBuilder getChanges(Lead prevLead, Lead lead) {
