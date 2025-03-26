@@ -22,6 +22,10 @@ public class TicketServiceImpl implements TicketService{
         this.ticketRepository = ticketRepository;
     }
 
+    public boolean existsByCustomerAndStatusAndSubject(Customer customer, String status, String subject) { //johanne csv
+        return ticketRepository.existsByCustomerAndStatusAndSubject(customer, status, subject);
+    }
+
     @Override
     public Optional<Ticket> findByTicketId(int id) {
         return Optional.ofNullable(ticketRepository.findByTicketId(id));

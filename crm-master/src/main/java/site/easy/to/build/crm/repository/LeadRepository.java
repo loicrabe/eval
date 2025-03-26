@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface LeadRepository extends JpaRepository<Lead, Integer> {
+
+    boolean existsByCustomerAndStatusAndName(Customer customer, String status, String name); //csv johanne
+    
     public Lead findByLeadId(int id);
 
     public List<Lead> findByCustomerCustomerId(int customerId);

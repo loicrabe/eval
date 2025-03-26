@@ -37,6 +37,10 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
+    
+    public List<Customer> saveAll(List<Customer> customers) { //johanne csv
+        return customerRepository.saveAll(customers);
+    }
 
     @Override
     public Customer save(Customer customer) {

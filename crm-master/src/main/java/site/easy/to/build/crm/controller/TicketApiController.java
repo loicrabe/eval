@@ -74,4 +74,11 @@ public class TicketApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @PostMapping("/update-ticket-amount/{id}")
+    public ResponseEntity<Void> updateTicketAmount(@PathVariable("id") int id, @RequestBody Map<String, Object> request) {
+        BigDecimal newAmount = new BigDecimal(request.get("amount").toString());
+        ticketService.updateTicketAmount(id, newAmount);
+        return ResponseEntity.ok().build();
+    }
 }

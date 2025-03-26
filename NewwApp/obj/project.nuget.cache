@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "msMi+xt4p7A=",
+  "dgSpecHash": "ORbJalYCpgM=",
   "success": true,
-  "projectFilePath": "/Users/Loic/Documents/NewApp/NewwApp/NewwApp.csproj",
+  "projectFilePath": "/Users/Loic/Documents/Eval 1/eval/NewwApp/NewwApp.csproj",
   "expectedPackageFiles": [
     "/Users/loic/.nuget/packages/system.io.pipelines/9.0.3/system.io.pipelines.9.0.3.nupkg.sha512",
     "/Users/loic/.nuget/packages/system.net.http.json/9.0.3/system.net.http.json.9.0.3.nupkg.sha512",

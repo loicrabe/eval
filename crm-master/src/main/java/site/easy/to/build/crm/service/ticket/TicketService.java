@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface TicketService {
+
+    public boolean existsByCustomerAndStatusAndSubject(Customer customer, String status, String subject); // johanne csv
     
     public Optional<Ticket> findByTicketId(int id);
 

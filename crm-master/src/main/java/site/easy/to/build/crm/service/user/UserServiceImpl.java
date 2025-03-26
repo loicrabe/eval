@@ -13,6 +13,10 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
+    public List<User> saveAll(List<User> empList) { //johanne csv
+        return userRepository.saveAll(empList);
+    }
+
     @Override
     public long countAllUsers() {
         return userRepository.count();

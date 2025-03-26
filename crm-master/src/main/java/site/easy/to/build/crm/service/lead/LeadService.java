@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface LeadService {
+
+    public boolean existsByCustomerAndStatusAndName(Customer customer, String status, String name) ; //johanne csv
+
     public Lead findByLeadId(int id);
 
     public List<Lead> findAll();

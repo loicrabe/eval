@@ -21,6 +21,10 @@ public class LeadServiceImpl implements LeadService {
         this.leadRepository = leadRepository;
     }
 
+    public boolean existsByCustomerAndStatusAndName(Customer customer, String status, String name) { //johanne csv
+        return leadRepository.existsByCustomerAndStatusAndName(customer, status, name);
+    }
+
     @Override
     public Lead findByLeadId(int id) {
         return leadRepository.findByLeadId(id);

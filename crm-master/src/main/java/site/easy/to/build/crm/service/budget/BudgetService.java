@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class BudgetService {
@@ -53,7 +54,10 @@ public class BudgetService {
 
     // Method to get all budgets
     public List<Budget> getAllBudgets() {
-        return budgetRepository.findAll();
+        List<Budget> allBudgets = budgetRepository.findAll();
+        return allBudgets.stream()
+            .filter(budget -> budget.getCustomer() != null)
+            .collect(Collectors.toList());
     }
 
     // Method to get a budget by its ID

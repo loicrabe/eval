@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/Loic/Documents/NewApp/NewwApp/NewwApp.csproj": {}
+    "/Users/Loic/Documents/Eval 1/eval/NewwApp/NewwApp.csproj": {}
   },
   "projects": {
-    "/Users/Loic/Documents/NewApp/NewwApp/NewwApp.csproj": {
+    "/Users/Loic/Documents/Eval 1/eval/NewwApp/NewwApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/Loic/Documents/NewApp/NewwApp/NewwApp.csproj",
+        "projectUniqueName": "/Users/Loic/Documents/Eval 1/eval/NewwApp/NewwApp.csproj",
         "projectName": "NewwApp",
-        "projectPath": "/Users/Loic/Documents/NewApp/NewwApp/NewwApp.csproj",
+        "projectPath": "/Users/Loic/Documents/Eval 1/eval/NewwApp/NewwApp.csproj",
         "packagesPath": "/Users/loic/.nuget/packages/",
-        "outputPath": "/Users/Loic/Documents/NewApp/NewwApp/obj/",
+        "outputPath": "/Users/Loic/Documents/Eval 1/eval/NewwApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/loic/.nuget/NuGet/NuGet.Config"

@@ -99,7 +99,7 @@ public class BudgetController {
     public String showAllBudgets(Model model) {
         List<Budget> budgets = budgetService.getAllBudgets();
         model.addAttribute("budgets", budgets);
-        return "budget/all-budgets"; // vue
+        return "budget/all-budgets";
     }
 
     @GetMapping("/api/budgets")

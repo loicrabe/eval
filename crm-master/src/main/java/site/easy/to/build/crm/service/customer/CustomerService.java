@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CustomerService {
 
+    public List<Customer> saveAll(List<Customer> customers);//johanne csv
+
     public Customer findByCustomerId(int customerId);
 
     public List<Customer> findByUserId(int userId);

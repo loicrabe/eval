@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface UserService {
 
+    public List<User> saveAll(List<User> empList);//johanne csv
+
     public long countAllUsers();
 
     public User findById(int id);

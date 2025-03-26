@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
+
+    boolean existsByCustomerAndStatusAndSubject(Customer customer, String status, String subject); //johanne csv
+
     public Ticket findByTicketId(int ticketId);
 
     public List<Ticket> findByManagerId(int id);
